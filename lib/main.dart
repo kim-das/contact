@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp( MaterialApp(
-
       home: MyApp()));
 }
 
@@ -15,7 +14,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var a=1;
-
   var name=['김영숙','홍길동','피자집'];
 
   @override
@@ -23,9 +21,11 @@ class _MyAppState extends State<MyApp> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          showDialog(context: context, builder: (context){
-            return Dialog(child: Text('안녕'));
-          });
+          showDialog(context: context, builder: (context) {
+            return DialogUI(
+            );
+          }
+          );
         },
       ),
           appBar:AppBar(backgroundColor: Colors.blue),
@@ -53,3 +53,27 @@ class _MyAppState extends State<MyApp> {
               );
 
   }}
+
+
+class DialogUI extends StatelessWidget {
+  const DialogUI({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      child: SizedBox(
+          width: 300,
+          height: 300,
+          child: Column(
+              children: [
+                TextField(),
+                TextButton(onPressed: () {}, child: Text('완료')),
+                TextButton(onPressed: () {
+                  Navigator.pop(context);
+                }, child: Text('취소'))
+              ]
+          )
+      ),
+    );
+  }
+}
