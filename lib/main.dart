@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() {
   runApp( MaterialApp(
@@ -13,6 +14,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  getPermission() async{
+    var status = await Permission.contacts.status;
+    if (status.isGranted){
+      print('허락됨');
+    }else if(status.isDenied){
+      print('거절됨');
+      Permission.contacts.request();
+    }
+
+  }
+
   var total=3;//친구 수
   var name=['김영숙','홍길동','피자집'];
 
@@ -39,7 +52,13 @@ class _MyAppState extends State<MyApp> {
           );
         },
       ),
-          appBar:AppBar(title:Text(total.toString()),backgroundColor: Colors.blue),
+          appBar:AppBar(
+              title:Text(total.toString()),
+              backgroundColor: Colors.blue,
+              actions: [IconButton(onPressed:(){
+                getPermission();
+              }, icon: Icon(Icons.contacts))],
+          ),
           body:
             ListView.builder(
               itemCount:name.length,
